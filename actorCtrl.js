@@ -6,7 +6,6 @@ app.controller("actorCtrl", function($scope) {
       this.image = imageUrl;
       this.bDay = birthday;
       this.imdb = imdbLink;
-      this.selected = false;
     };
     
     Actor.prototype.fullName = function() {
@@ -44,14 +43,10 @@ app.controller("actorCtrl", function($scope) {
             (lNameUpper.includes(nameFilter))) {
             return true;
         }
+        $scope.selectedCard = -1;     
     }
-    
-    $scope.selected = function(actor) {
-        for (let i = 0, len = $scope.actors.length; i < len; i++) {
-            // reset all flags
-            $scope.actors[i].selected = false;
-        }
-        actor.selected = true;
-        
+    $scope.selectedCard = -1;
+    $scope.selected = function(index) {
+        $scope.selectedCard = index;
     }
   });

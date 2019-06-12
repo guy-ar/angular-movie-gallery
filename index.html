@@ -40,11 +40,11 @@
                 </div>
             </form>
         </div>
-       
+        <p ng-show="true">No items found for the filter</p>
         <div class="row">
             <div class="col-md-4 col-sm-6 mb-5" ng-repeat="actor in actors | filter:filterQuery | orderBy: orderFld ">
-        
-                <div ng-class="{'card': true, 'bg-danger': actor.selected}" ng-click="selected(actor);">
+                <!-- this solution has bug - when filter - the selected hold different data that match tothe old selected -->
+                <div ng-class="{'card': true, 'bg-danger': $index === selectedCard}" ng-click="selected($index);">
                     <img class="card-img-top" ng-src=" {{ actor.image }} "  alt="Card image">
                     <div class="card-body">
                     <a href=" {{ actor.imdb}}" target="_blank" >
