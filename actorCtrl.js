@@ -43,10 +43,12 @@ app.controller("actorCtrl", function($scope) {
             (lNameUpper.includes(nameFilter))) {
             return true;
         }
-        $scope.selectedCard = -1;     
+        //$scope.selectedCard = -1;     
     }
     $scope.selectedCard = -1;
+    // replace the fucntion as it do not support use case where the data is filtered
     $scope.selected = function(index) {
         $scope.selectedCard = index;
     }
+    
   });
