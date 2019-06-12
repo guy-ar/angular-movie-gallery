@@ -44,7 +44,7 @@
         <div class="row">
             <div class="col-md-4 col-sm-6 mb-5" ng-repeat="actor in actors | filter:filterQuery | orderBy: orderFld ">
         
-                <div class="card">
+                <div ng-class="{'card': true, 'bg-danger': actor.selected}" ng-click="selected(actor);">
                     <img class="card-img-top" ng-src=" {{ actor.image }} "  alt="Card image">
                     <div class="card-body">
                     <a href=" {{ actor.imdb}}" target="_blank" >
