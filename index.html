@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html ng-app="actorApp">
+
+  <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+            crossorigin="anonymous">
+    <link rel="stylesheet" href="https://code.angularjs.org/1.7.8/angular-csp.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.angularjs.org/1.7.8/angular.min.js"></script>
+    <script src="app.js"></script>
+    <script src="actorCtrl.js"></script>
+  </head>
+
+
+  <body >
+    <h1>Hello Plunker!</h1>
+    <div class="container" ng-controller="actorCtrl">
+      
+     
+      <div class="row">
+        <div class="col-md-4 col-sm-6 mb-5" ng-repeat="actor in actors">
+      
+          <div class="card">
+            <img class="card-img-top" src=" {{ actor.image }} "  alt="Card image">
+            <div class="card-body">
+              <a href=" {{ actor.imdb}}" target="_blank" >
+                <h4 class="card-title">{{ actor.fullName() }}</h4>
+              </a>
+              <p class="card-text">Birthday: {{ actor.bDay | date }} </p>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+       
+      
+    </div>
+    
+  </body>
+
+</html>
