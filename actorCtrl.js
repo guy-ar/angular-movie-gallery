@@ -32,11 +32,17 @@ app.controller("actorCtrl", function($scope) {
     "1948-12-21", "https://www.imdb.com/name/nm0000173/"));
   
     
+    $scope.query = "";
     
-  
-  
-  /*
-    $scope.sum = function() {
-      return $scope.num1 + $scope.num2 }; */
+    $scope.filterQuery = function(actor) {
+        let fNameUpper = actor.fName.toUpperCase();
+        let lNameUpper = actor.lName.toUpperCase();
+        let nameFilter = $scope.query.toUpperCase();
+        
+        if ((fNameUpper.includes(nameFilter)) || 
+            (lNameUpper.includes(nameFilter))) {
+            return true;
+        }
+    }
     
   });
