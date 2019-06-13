@@ -1,5 +1,5 @@
 
-app.controller("actorCtrl", function($scope) {
+app.controller("actorCtrl", function($scope, $http) {
     function Actor(fName, lName, imageUrl, birthday, imdbLink){
       this.fName = fName;
       this.lName = lName;  
@@ -13,6 +13,7 @@ app.controller("actorCtrl", function($scope) {
     }
     
     $scope.actors = [];
+    /*
     $scope.actors.push(new Actor("Robert", "Downey Jr.", "https://m.media-amazon.com/images/M/MV5BNzg1MTUyNDYxOF5BMl5BanBnXkFtZTgwNTQ4MTE2MjE@._V1_SY1000_CR0,0,664,1000_AL_.jpg",
     "1965-04-04", "https://www.imdb.com/name/nm0000375/"));
     $scope.actors.push(new Actor("Angelina", "Jolie", 
@@ -30,7 +31,21 @@ app.controller("actorCtrl", function($scope) {
     "1948-12-21", "https://www.imdb.com/name/nm0424060/"));
     $scope.actors.push(new Actor("Nicole", "Kidman", "https://m.media-amazon.com/images/M/MV5BMTk1MjM5NDg4MF5BMl5BanBnXkFtZTcwNDg1OTQ4Nw@@._V1_SX738_CR0,0,738,999_AL_.jpg",
     "1948-12-21", "https://www.imdb.com/name/nm0000173/"));
-  
+  */
+$http.get("actors.json").then(
+  function (res){
+    // on success
+    for (let i = 0, len = res.data.length; i < len; i++) {
+      $scope.actors.push(new Actor(res.data[i].fName, res.data[i].lName, 
+                          res.data[i].imageUrl, res.data[i].birthday, 
+                          res.data[i].imdbLink));
+    }
+  }, function(err) {
+    // on error
+    console.error(err);
+  });
+
+
     
     $scope.query = "";
     
