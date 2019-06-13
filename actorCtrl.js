@@ -45,10 +45,17 @@ app.controller("actorCtrl", function($scope) {
         }
         //$scope.selectedCard = -1;     
     }
-    $scope.selectedCard = -1;
+    //$scope.selectedCard = -1;
+    $scope.selectedActor = null;
     // replace the fucntion as it do not support use case where the data is filtered
-    $scope.selected = function(index) {
-        $scope.selectedCard = index;
+    //$scope.selected = function(index) {
+    $scope.selected = function(actor) {
+        if ($scope.selectedActor == actor) {
+          // if selecting again the same entry - unselect it
+          $scope.selectedActor = null;
+        } else {
+          $scope.selectedActor = actor;
+        }
     }
     
   });
