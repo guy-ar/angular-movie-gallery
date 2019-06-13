@@ -1,11 +1,22 @@
 
 app.controller("actorCtrl", function($scope, $http) {
-    function Actor(fName, lName, imageUrl, birthday, imdbLink){
-      this.fName = fName;
-      this.lName = lName;  
-      this.image = imageUrl;
-      this.bDay = birthday;
-      this.imdb = imdbLink;
+    function Actor(fNameOrObj, lName, imageUrl, birthday, imdbLink){
+      // constructor may accept 2 options
+      // 5 different attributes
+      // or one simpleObject with all fields
+      if (arguments.length > 1) {      
+        this.fName = fNameOrObj;
+        this.lName = lName;  
+        this.image = imageUrl;
+        this.bDay = birthday;
+        this.imdb = imdbLink;
+      } else {
+        this.fName = fNameOrObj.fName;
+        this.lName = fNameOrObj.lName;  
+        this.image = fNameOrObj.imageUrl;
+        this.bDay = fNameOrObj.birthday;
+        this.imdb = fNameOrObj.imdbLink;
+      }
     };
     
     Actor.prototype.fullName = function() {
@@ -18,9 +29,12 @@ app.controller("actorCtrl", function($scope, $http) {
       function (res){
         // on success
         for (let i = 0, len = res.data.length; i < len; i++) {
-          $scope.actors.push(new Actor(res.data[i].fName, res.data[i].lName, 
+          // use different contructor
+          /*$scope.actors.push(new Actor(res.data[i].fName, res.data[i].lName, 
                               res.data[i].imageUrl, res.data[i].birthday, 
                               res.data[i].imdbLink));
+                              */
+          $scope.actors.push(new Actor(res.data[i]));
         }
       }, function(err) {
         // on error
