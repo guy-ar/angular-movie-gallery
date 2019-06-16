@@ -1,0 +1,20 @@
+[
+    {
+        "name": "Avengers: Endgame",
+        "imdbId": "tt4154796",  
+        "releaseYear": "2019",
+        "movieLen":  181,
+        "posterUrl":  "https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_SY1000_CR0,0,674,1000_AL_.jpg",
+        "starsArr": ['Robert Downey Jr.', 'Chris Evans', 'Mark Ruffalo'],
+        "director": "Anthony Russo, Joe Russo"
+    },
+    {
+        "name": "Avengers: Infinity War",
+        "imdbId": "tt4154756",  
+        "releaseYear": "2018",
+        "movieLen":  149,
+        "posterUrl":  "https://m.media-amazon.com/images/M/MV5BMjMxNjY2MDU1OV5BMl5BanBnXkFtZTgwNzY1MTUwNTM@._V1_SY1000_CR0,0,674,1000_AL_.jpg",
+        "starsArr": ['Robert Downey Jr.', 'Chris Evans', 'Mark Ruffalo'],
+        "director": "Anthony Russo, Joe Russo"
+    }
+]

@@ -5,11 +5,15 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
             integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
             crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://code.angularjs.org/1.7.8/angular-csp.css">
     <link rel="stylesheet" href="style.css">
     <script src="https://code.angularjs.org/1.7.8/angular.min.js"></script>
     <script src="app.js"></script>
     <script src="actorCtrl.js"></script>
+    <script src="movieCtrl.js"></script>
   </head>
 
 
@@ -62,7 +66,44 @@
       
     </div>
 
-    {{ orderFld }}
+    <div class="container bg-light" ng-controller="movieCtrl">
+        <h1>My Actors!</h1>
+    
+        <div id="accordion">
+            <div class="card" ng-repeat="movie in movies">
+                <div class="card-header">
+                <a class="card-link" data-toggle="collapse" href="{{'#collapse' + movie.imdbId}}">
+                    Movie Name: {{ movie.name}}
+                </a>
+                </div>
+                <div id="{{'collapse' + movie.imdbId}}" ng-class="{'collapse': true, 'show': $first}" data-parent="#accordion"> 
+                <!-- <div id="{{'collapse' + movie.imdbId}}" ng-class="{'collapse': true}" data-parent="#accordion"> -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img class="img-fluid" src="{{ movie.poster}}" alt="movie poster" srcset="">
+                        </div>
+                        <div class="col-md-6">
+                            <p>
+                                <strong>Year:</strong> {{ movie.releasedDate}}
+                            </p>
+                            <p>
+                                <strong>Lenght:</strong> {{ movie.length}}
+                            </p>
+                            <p>
+                                <strong>Stars:</strong> {{ movie.starsArr}}
+                            </p>
+                            <p>
+                                <strong>Director:</strong> {{ movie.director}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     
   </body>
 
