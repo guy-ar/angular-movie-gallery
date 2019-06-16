@@ -24,6 +24,8 @@
                             <ul class="list-group">
                                 <li class="list-group-item" ng-repeat="star in movie.starsArr">{{ star }}</li>
                             </ul>
+                            <!-- alternative way to present it - using expresion with comma - for last we will not have the comma seperation-->
+                            <!-- <span ng-repeat="star in movie.starsArr">{{ star }} {{$last?'':', '}}</span> -->
                         </p>
                         <p>
                             <strong>Director:</strong> {{ movie.director}}
