@@ -20,7 +20,10 @@
                             <strong>Lenght:</strong> {{ movie.length}}
                         </p>
                         <p>
-                            <strong>Stars:</strong> {{ movie.starsArr}}
+                            <strong>Stars:</strong> 
+                            <ul class="list-group">
+                                <li class="list-group-item" ng-repeat="star in movie.starsArr">{{ star }}</li>
+                            </ul>
                         </p>
                         <p>
                             <strong>Director:</strong> {{ movie.director}}
