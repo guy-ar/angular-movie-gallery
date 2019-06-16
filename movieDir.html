@@ -1,0 +1,33 @@
+<div id="accordion">
+        <div class="card" ng-repeat="movie in movies">
+            <div class="card-header">
+            <a class="card-link" data-toggle="collapse" href="{{'#collapse' + movie.imdbId}}">
+                Movie Name: {{ movie.name}}
+            </a>
+            </div>
+            <div id="{{'collapse' + movie.imdbId}}" ng-class="{'collapse': true, 'show': $first}" data-parent="#accordion"> 
+            <!-- <div id="{{'collapse' + movie.imdbId}}" ng-class="{'collapse': true}" data-parent="#accordion"> -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <img class="img-fluid" ng-src="{{ movie.poster}}" alt="movie poster" srcset="">
+                    </div>
+                    <div class="col-md-6">
+                        <p>
+                            <strong>Year:</strong> {{ movie.releasedDate}}
+                        </p>
+                        <p>
+                            <strong>Lenght:</strong> {{ movie.length}}
+                        </p>
+                        <p>
+                            <strong>Stars:</strong> {{ movie.starsArr}}
+                        </p>
+                        <p>
+                            <strong>Director:</strong> {{ movie.director}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
