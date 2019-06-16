@@ -24,6 +24,7 @@ app.controller("movieCtrl", function($scope, $http) {
        
     $scope.movies = [];
 
+    /*
     // hard code population
     $scope.movies.push(new Movie('Avengers: Endgame', 'tt4154796', '2019', 181, 
             'https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_SY1000_CR0,0,674,1000_AL_.jpg',
@@ -32,5 +33,19 @@ app.controller("movieCtrl", function($scope, $http) {
     $scope.movies.push(new Movie('Avengers: Infinity War', 'tt4154756', '2018', 149, 
             'https://m.media-amazon.com/images/M/MV5BMjMxNjY2MDU1OV5BMl5BanBnXkFtZTgwNzY1MTUwNTM@._V1_SY1000_CR0,0,674,1000_AL_.jpg',
             ['Robert Downey Jr.', 'Chris Evans', 'Mark Ruffalo'], ' Anthony Russo, Joe Russo'))
+    */
+
+    // read content from Json
+    $http.get("movies.json").then(
+        function (res){
+          // on success
+          for (let i = 0, len = res.data.length; i < len; i++) {
+            
+            $scope.movies.push(new Movie(res.data[i]));
+          }
+        }, function(err) {
+          // on error
+          console.error(err);
+        });
 
 });
