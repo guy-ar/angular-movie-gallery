@@ -13,6 +13,7 @@
     <script src="https://code.angularjs.org/1.7.8/angular.min.js"></script>
     <script src="app.js"></script>
     <script src="actorCtrl.js"></script>
+    <script src="actorSrv.js"></script>
     <script src="movieCtrl.js"></script>
     <script src="movieDir.js"></script>
     <script src="convertSrv.js"></script>
@@ -49,7 +50,8 @@
         
         <div class="row">
             <h4 class="text-danger" ng-show="filteredActors.length == 0">No items found for the filter</h4>
-            <div class="col-md-4 col-sm-6 mb-5" ng-repeat="actor in filteredActors = (actors | filter:filterQuery | orderBy: orderFld) ">
+             <div class="col-md-4 col-sm-6 mb-5" ng-repeat="actor in filteredActors = (actors | filter:filterQuery | orderBy: orderFld) "> 
+          <!--          <div class="col-md-4 col-sm-6 mb-5" ng-repeat="actor in actors | filter:filterQuery | orderBy: orderFld "> -->
                 <!-- this solution has bug - when filter - the selected hold different data that match tothe old selected -->
                 <!-- <div ng-class="{'card': true, 'bg-danger': $index === selectedCard}" ng-click="selected($index);"> -->
                 <div ng-class="{'card': true, 'bg-danger':actor === selectedActor}" ng-click="selected(actor);">
