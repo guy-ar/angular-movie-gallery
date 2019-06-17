@@ -1,12 +1,12 @@
-<div id="accordion my=5">
-        <div class="card" ng-repeat="movie in movies">
-            <div class="card-header">
+<div id="accordion">
+    <div class="card" ng-repeat="movie in movies">
+        <div class="card-header">
             <a class="card-link" data-toggle="collapse" href="{{'#collapse' + movie.imdbId}}">
                 Movie Name: {{ movie.name}}
             </a>
-            </div>
-            <div id="{{'collapse' + movie.imdbId}}" ng-class="{'collapse': true, 'show': $first}" data-parent="#accordion"> 
-            <!-- <div id="{{'collapse' + movie.imdbId}}" ng-class="{'collapse': true}" data-parent="#accordion"> -->
+        </div>
+        <div id="{{'collapse' + movie.imdbId}}" ng-class="{'collapse': true, 'show': $first}" data-parent="#accordion"> 
+        <!-- <div id="{{'collapse' + movie.imdbId}}" ng-class="{'collapse': true}" data-parent="#accordion"> -->
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
@@ -33,6 +33,6 @@
                     </div>
                 </div>
             </div>
-            </div>
         </div>
     </div>
+</div>
