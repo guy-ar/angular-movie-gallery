@@ -15,6 +15,7 @@
     <script src="actorCtrl.js"></script>
     <script src="movieCtrl.js"></script>
     <script src="movieDir.js"></script>
+    <script src="convertSrv.js"></script>
   </head>
 
 
@@ -57,7 +58,10 @@
                     <a href=" {{ actor.imdb}}" target="_blank" >
                         <h4 class="card-title">{{ actor.fullName() }}</h4>
                     </a>
-                    <p class="card-text">Birthday: {{ actor.bDay | date }} </p>
+                    <p class="card-text">Birthday: {{ actor.bDay | date }} <br> 
+                        Age: {{ actor.getAge() }}
+                    </p>
+                    
                     
                     </div>
                 </div>

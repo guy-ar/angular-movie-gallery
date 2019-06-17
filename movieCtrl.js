@@ -1,4 +1,4 @@
-app.controller("movieCtrl", function($scope, $http) {
+app.controller("movieCtrl", function($scope, $http, convert) {
     function Movie(nameOrObj, imdbId, releaseYear, movieLen, posterUrl, starsArr, director){
       // constructor may accept 2 options
       // 5 different attributes
@@ -21,6 +21,10 @@ app.controller("movieCtrl", function($scope, $http) {
         this.director = nameOrObj.director;
       }
     };
+
+    Movie.prototype.min2Hour = function() {
+        return convert.convertMinToHours(this.length);
+    }    
        
     $scope.movies = [];
 

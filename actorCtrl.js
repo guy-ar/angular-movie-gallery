@@ -1,5 +1,5 @@
 
-app.controller("actorCtrl", function($scope, $http) {
+app.controller("actorCtrl", function($scope, $http, convert) {
     function Actor(fNameOrObj, lName, imageUrl, birthday, imdbLink){
       // constructor may accept 2 options
       // 5 different attributes
@@ -23,6 +23,9 @@ app.controller("actorCtrl", function($scope, $http) {
       return this.fName + " " + this.lName;
     }
     
+    Actor.prototype.getAge = function() {
+      return convert.calcAge(this.bDay);
+    }
     $scope.actors = [];
    
     $http.get("actors.json").then(
