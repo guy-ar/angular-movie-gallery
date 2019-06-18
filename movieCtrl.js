@@ -13,9 +13,7 @@ app.controller("movieCtrl", function($scope, $http, movieSrv) {
     $scope.movieSearchText = "";
     $scope.searchResults = [];
     $scope.favoriteMovies = [];
-    let apiKey = "?api_key=bf17da39659009eb552f15e8ebda08ad";
-    let prefixUrl = "https://api.themoviedb.org/3/";
-
+    
     $scope.updateSearchResults = function() {
         if ($scope.movieSearchText) {
             movieSrv.getMoviesApi($scope.movieSearchText).then(function(movies) {
@@ -31,16 +29,14 @@ app.controller("movieCtrl", function($scope, $http, movieSrv) {
 
     // Adding movie (getting details from TMDB)
     $scope.addMovie = function(searchResult) {
-
-        let movieDetailsUrl = "https://api.themoviedb.org/3/movie/" + 
-          searchResult.id + apiKey;
-        
-        $http.get(movieDetailsUrl).then(function(res) {
+       
+        movieSrv.getMovieDtlsApi(searchResult.id).then(function(tmdbMovie) {
             movieSrv.addMovie(
                 //  need to get the following data: name, imdbId, releasedDate, length, poster, starsArr, director
                 // failed to get the start and director - need to see how top get the image
-                res.data.title, res.data.imdb_id, res.data.release_date, res.data.runtime, "https://image.tmdb.org/t/p/w500" + res.data.poster_path, [], "");
-            
+                // res.data.title, res.data.imdb_id, res.data.release_date, res.data.runtime, "https://image.tmdb.org/t/p/w500" + res.data.poster_path, [], "");
+                tmdbMovie.title, tmdbMovie.imdbId, tmdbMovie.releaesDate, 
+                tmdbMovie.length, tmdbMovie.poster, [], "");
         }, function(err) {
             $log.error(err);
         })

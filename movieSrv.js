@@ -91,13 +91,42 @@ app.factory("movieSrv", function($log, $http, $q, convert) {
 
 
     function addMovie(nameOrObj, imdbId, releaseYear, movieLen, posterUrl, starsArr, director) {
-        var movie = new Movie(nameOrObj, imdbId, releaseYear, movieLen, posterUrl, starsArr, director);
+        let fullPosterUrl = "https://image.tmdb.org/t/p/w500" + posterUrl;
+        let movie = new Movie(nameOrObj, imdbId, releaseYear, movieLen, fullPosterUrl, starsArr, director);
         movies.push(movie);
 
+    }
+
+// Adding movie (getting details from TMDB)
+
+   
+
+
+    function addMovieDtlsFromApi(movieId) {
+        let movieDetailsUrl = prefixUrl + "movie/" + 
+        movieId + apiKey;
+        let async = $q.defer();
+
+        $http.get(movieDetailsUrl).then(function(res) {
+            let tmdbMovie = {"title": res.data.title,   
+                            "imdbId": res.data.imdb_id,
+                            "releaesDate": res.data.release_date,
+                            "length": res.data.runtime,
+                            "poster": res.data.poster_path
+                            };           
+            async.resolve(tmdbMovie);
+      }, function(err) {
+          $log.error(err);
+          async.reject();
+      })
+     
+
+        return async.promise;
     }
     return {
         getMovies: getMoviesFromJson,
         getMoviesApi: getMoviesFromTmdb,
-        addMovie: addMovie
+        addMovie: addMovie,
+        getMovieDtlsApi: addMovieDtlsFromApi
     }
 });
