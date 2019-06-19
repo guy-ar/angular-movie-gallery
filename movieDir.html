@@ -15,33 +15,8 @@
         <div id="{{'collapse' + movie.imdbId}}" ng-class="{'collapse': true, 'show': $first}" data-parent="#accordion"> 
         <!-- <div id="{{'collapse' + movie.imdbId}}" ng-class="{'collapse': true}" data-parent="#accordion"> -->
             <!-- add directive for inner section -->
-            <!-- <myMovieDtls></myMovieDtls> -->
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <img class="img-fluid" ng-src="{{ movie.poster}}" alt="movie poster" srcset="">
-                    </div>
-                    <div class="col-md-6">
-                        <p>
-                            <strong>Year:</strong> {{ movie.releasedDate}}
-                        </p>
-                        <p>
-                            <strong>Lenght:</strong> {{ movie.length}} {{ " " }} {{ movie.min2Hour()}}
-                        </p>
-                        <p>
-                            <strong>Stars:</strong> 
-                            <ul class="list-group">
-                                <li class="list-group-item" ng-repeat="star in movie.starsArr">{{ star }}</li>
-                            </ul>
-                            <!-- alternative way to present it - using expresion with comma - for last we will not have the comma seperation-->
-                            <!-- <span ng-repeat="star in movie.starsArr">{{ star }} {{$last?'':', '}}</span> -->
-                        </p>
-                        <p>
-                            <strong>Director:</strong> {{ movie.director}}
-                        </p>
-                    </div>
-                </div>
-            </div>
+            <my-movie-dtls></my-movie-dtls>
+            
         </div>
     </div>
 </div>

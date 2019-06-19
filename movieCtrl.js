@@ -1,4 +1,4 @@
-app.controller("movieCtrl", function($scope, movieSrv, $location) {
+app.controller("movieCtrl", function($scope, movieSrv, $log, $location) {
     
     $scope.movies = [];
     movieSrv.getMovies().then(function(movies) {
@@ -31,13 +31,9 @@ app.controller("movieCtrl", function($scope, movieSrv, $location) {
     // Adding movie (getting details from TMDB)
     $scope.addMovie = function(searchResult) {
        
-        movieSrv.getMovieDtlsApi(searchResult.id).then(function(tmdbMovie) {
-            movieSrv.addMovie(
-                //  need to get the following data: name, imdbId, releasedDate, length, poster, starsArr, director
-                // failed to get the start and director - need to see how top get the image
-                // res.data.title, res.data.imdb_id, res.data.release_date, res.data.runtime, "https://image.tmdb.org/t/p/w500" + res.data.poster_path, [], "");
-                tmdbMovie.id, tmdbMovie.title, tmdbMovie.imdbId, tmdbMovie.releaesDate, 
-                tmdbMovie.length, tmdbMovie.poster, [], "");
+        movieSrv.addMovieFromApi(searchResult.id).then(function(tmdbMovie) {
+            // at this point the Movie was added to list
+            $log.info(JSON.stringify(tmdbMovie));
         }, function(err) {
             $log.error(err);
         })

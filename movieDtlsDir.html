@@ -5,7 +5,7 @@
         </div>
         <div class="col-md-6">
             <p>
-                <strong>Year:</strong> {{ movie.releasedDate}}
+                <strong>Year:</strong> {{ movie.releaseDate}}
             </p>
             <p>
                 <strong>Lenght:</strong> {{ movie.length}} {{ " " }} {{ movie.min2Hour()}}
@@ -13,7 +13,7 @@
             <p>
                 <strong>Stars:</strong> 
                 <ul class="list-group">
-                    <li class="list-group-item" ng-repeat="star in movie.starsArr">{{ star }}</li>
+                    <li class="list-group-item" ng-repeat="star in movie.stars">{{ star }}</li>
                 </ul>
                 <!-- alternative way to present it - using expresion with comma - for last we will not have the comma seperation-->
                 <!-- <span ng-repeat="star in movie.starsArr">{{ star }} {{$last?'':', '}}</span> -->

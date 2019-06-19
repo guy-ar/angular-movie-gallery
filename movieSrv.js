@@ -1,6 +1,6 @@
 app.factory("movieSrv", function($log, $http, $q, convert) {
 
-    function Movie(idOrObj, name, imdbId, releaseYear, movieLen, posterUrl, starsArr, director){
+    function Movie(idOrObj, name, imdbId, releaseDate, movieLen, posterUrl, stars, director){
         // constructor may accept 2 options
         // 5 different attributes
         // or one simpleObject with all fields
@@ -8,19 +8,19 @@ app.factory("movieSrv", function($log, $http, $q, convert) {
           this.id = idOrObj;
           this.name = name;
           this.imdbId = imdbId;
-          this.releasedDate = releaseYear;  
+          this.releaseDate = releaseDate;  
           this.length = movieLen;
           this.poster = posterUrl;
-          this.starsArr = starsArr;
+          this.stars = stars;
           this.director = director; 
         } else {
           this.id = idOrObj.id;
           this.name = idOrObj.name;
           this.imdbId = idOrObj.imdbId;
-          this.releasedDate = idOrObj.releaseYear;  
+          this.releaseDate = idOrObj.releaseDate;  
           this.length = idOrObj.movieLen;
           this.poster = idOrObj.posterUrl;
-          this.starsArr = idOrObj.starsArr;
+          this.stars = idOrObj.stars;
           this.director = idOrObj.director;
         }
     };
@@ -94,44 +94,88 @@ app.factory("movieSrv", function($log, $http, $q, convert) {
     }
 
 
-    function addMovie(idOrObj, name, imdbId, releaseYear, movieLen, posterUrl, starsArr, director) {
-        let fullPosterUrl = "https://image.tmdb.org/t/p/w500" + posterUrl;
-        let movie = new Movie(idOrObj, name, imdbId, releaseYear, movieLen, fullPosterUrl, starsArr, director);
+    function addMovie(id, name, imdbId, releaseDate, movieLen, posterUrl, stars, director) {
+        let movie = new Movie(id, name, imdbId, releaseDate, movieLen, posterUrl, stars, director);
         movies.push(movie);
 
     }
 
 // Adding movie (getting details from TMDB)
 
-   
-
-
-    function addMovieDtlsFromApi(movieId) {
-        let movieDetailsUrl = prefixUrl + "movie/" + 
-        movieId + apiKey;
-        let async = $q.defer();
-
-        $http.get(movieDetailsUrl).then(function(res) {
-            let tmdbMovie = {"id": res.data.id,
-                            "title": res.data.title,   
-                            "imdbId": res.data.imdb_id,
-                            "releaesDate": res.data.release_date,
-                            "length": res.data.runtime,
-                            "poster": res.data.poster_path
-                            };           
+function getMovieDtlsFromApi(movieId) {
+    let movieDetailsUrl = prefixUrl + "movie/" + 
+    movieId + apiKey;
+    
+    let moveCreditsUrl = prefixUrl + "movie/" + 
+    movieId + "/credits" + apiKey;
+    
+    let async = $q.defer();
+    let tmdbMovie = {};
+    $http.get(movieDetailsUrl).then(function(res) {
+        
+        // call second API to get the credits
+        $http.get(moveCreditsUrl).then(function(internalRes) { 
+            tmdbMovie = {"id": res.data.id,
+                    "title": res.data.title,   
+                    "imdbId": res.data.imdb_id,
+                    "releaseDate": res.data.release_date,
+                    "length": res.data.runtime,
+                        "poster": "https://image.tmdb.org/t/p/w500" + res.data.poster_path
+                        };
+            // add the director
+            let cast = internalRes.data.cast;
+            let crew = internalRes.data.crew;
+            for (let i = 0, len = crew.length; i < len; i++){
+                if (crew[i].job =="Director") {
+                    tmdbMovie.director = crew[i].name;   
+                    break;
+                }
+            }
+            tmdbMovie.stars = [];
+            for (let i = 0, len = Math.min(cast.length, 5); i < len; i++){
+                tmdbMovie.stars.push(cast[i].name);
+            }
+            // add the movie detials to the list
+            
             async.resolve(tmdbMovie);
-      }, function(err) {
-          $log.error(err);
-          async.reject();
-      })
-     
+        }, function(err) {
+            $log.error(err);
+            async.reject();
+        })
+  }, function(err) {
+      $log.error(err);
+      async.reject();
+  })
+ 
 
-        return async.promise;
-    }
+    return async.promise;
+}
+
+
+// call to getMovieDtlsFromApi() and add the movie to "DB"
+function addMovieDtlsFromApi(movieId) {
+            
+    let async = $q.defer();
+    let tmdbMovie = {};
+    getMovieDtlsFromApi(movieId).then(function(tmdbMovie) {
+        // add the movie detials to the list
+        addMovie(
+            tmdbMovie.id, tmdbMovie.title, tmdbMovie.imdbId, tmdbMovie.releaseDate, 
+                tmdbMovie.length, tmdbMovie.poster, tmdbMovie.stars, tmdbMovie.director);
+            async.resolve(tmdbMovie);
+    }, function(err) {
+            $log.error(err);
+            async.reject();
+    })
+ 
+
+    return async.promise;
+}
+
     return {
         getMovies: getMoviesFromJson,
         getMoviesApi: getMoviesFromTmdb,
-        addMovie: addMovie,
-        getMovieDtlsApi: addMovieDtlsFromApi
+        getMovieFromApi: getMovieDtlsFromApi,
+        addMovieFromApi: addMovieDtlsFromApi
     }
 });
