@@ -1,0 +1,18 @@
+<div class="container bg-light">
+    <h1>My Movies!</h1>
+    <div class="search-box my-3">
+        <input class="form-control search-input" type="text" placeholder="Enter Movie Name to Add" 
+        ng-model="movieSearchText" ng-change="updateSearchResults()">
+    </div>
+    <div class="search-results" ng-show="searchResults.length > 0">
+        <ul class="list-group">
+            <!--> need to insure that we are not changing the url rom the list -->
+            <a href="javascript:void(0)" ng-repeat="result in searchResults" 
+            class="list-group-item list-group-item-action" ng-click="addMovie(result)">{{result.title}}</a>
+        </ul>
+    </div>
+
+    <!-- Switch to use myMovie directive -->
+    <my-movie></my-movie>
+
+</div>

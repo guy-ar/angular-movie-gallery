@@ -1,7 +1,8 @@
 
 app.controller("actorCtrl", function($scope, $log, $http, actorSrv) {
     
-    //$scope.actors = [];
+    // initiate the data
+    $scope.actors = [];
     
     actorSrv.getActors().then(function(actors) {
       $scope.actors = actors;

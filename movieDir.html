@@ -1,12 +1,21 @@
 <div id="accordion">
     <div class="card" ng-repeat="movie in movies">
         <div class="card-header">
-            <a class="card-link" data-toggle="collapse" href="{{'#collapse' + movie.imdbId}}">
-                Movie Name: {{ movie.name}}
-            </a>
+            <div class="row">
+                <div class="col-md-6">
+                    <a class="card-link" data-toggle="collapse" href="javascript:void(0)" data-target="{{'#collapse' + movie.imdbId}}">
+                        Movie Name: {{ movie.name}}
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-info" type="button" ng-click="getMovieDtls(movie);">Full Details</button>
+                </div>
+            </div>
         </div>
         <div id="{{'collapse' + movie.imdbId}}" ng-class="{'collapse': true, 'show': $first}" data-parent="#accordion"> 
         <!-- <div id="{{'collapse' + movie.imdbId}}" ng-class="{'collapse': true}" data-parent="#accordion"> -->
+            <!-- add directive for inner section -->
+            <!-- <myMovieDtls></myMovieDtls> -->
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">

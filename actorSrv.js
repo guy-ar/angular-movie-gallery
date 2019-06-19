@@ -30,6 +30,8 @@ app.factory("actorSrv", function($log, $http, $q, convert) {
     let actors = [];
 
     function getActors(){
+        // initiate the data before getting it back from DB
+        actors = [];
         let async = $q.defer();
 
         $http.get("actors.json").then(

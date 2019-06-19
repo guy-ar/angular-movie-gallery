@@ -1,11 +1,12 @@
 app.factory("movieSrv", function($log, $http, $q, convert) {
 
-    function Movie(nameOrObj, imdbId, releaseYear, movieLen, posterUrl, starsArr, director){
+    function Movie(idOrObj, name, imdbId, releaseYear, movieLen, posterUrl, starsArr, director){
         // constructor may accept 2 options
         // 5 different attributes
         // or one simpleObject with all fields
-        if (arguments.length > 1) {      
-          this.name = nameOrObj;
+        if (arguments.length > 1) {
+          this.id = idOrObj;
+          this.name = name;
           this.imdbId = imdbId;
           this.releasedDate = releaseYear;  
           this.length = movieLen;
@@ -13,13 +14,14 @@ app.factory("movieSrv", function($log, $http, $q, convert) {
           this.starsArr = starsArr;
           this.director = director; 
         } else {
-          this.name = nameOrObj.name;
-          this.imdbId = nameOrObj.imdbId;
-          this.releasedDate = nameOrObj.releaseYear;  
-          this.length = nameOrObj.movieLen;
-          this.poster = nameOrObj.posterUrl;
-          this.starsArr = nameOrObj.starsArr;
-          this.director = nameOrObj.director;
+          this.id = idOrObj.id;
+          this.name = idOrObj.name;
+          this.imdbId = idOrObj.imdbId;
+          this.releasedDate = idOrObj.releaseYear;  
+          this.length = idOrObj.movieLen;
+          this.poster = idOrObj.posterUrl;
+          this.starsArr = idOrObj.starsArr;
+          this.director = idOrObj.director;
         }
     };
   
@@ -42,6 +44,8 @@ app.factory("movieSrv", function($log, $http, $q, convert) {
 
     
     function getMoviesFromJson() {
+        // ionitiate the data beore loading from "db"
+        movies = [];
         let async = $q.defer();
          // read content from Json
         $http.get("movies.json").then(
@@ -90,9 +94,9 @@ app.factory("movieSrv", function($log, $http, $q, convert) {
     }
 
 
-    function addMovie(nameOrObj, imdbId, releaseYear, movieLen, posterUrl, starsArr, director) {
+    function addMovie(idOrObj, name, imdbId, releaseYear, movieLen, posterUrl, starsArr, director) {
         let fullPosterUrl = "https://image.tmdb.org/t/p/w500" + posterUrl;
-        let movie = new Movie(nameOrObj, imdbId, releaseYear, movieLen, fullPosterUrl, starsArr, director);
+        let movie = new Movie(idOrObj, name, imdbId, releaseYear, movieLen, fullPosterUrl, starsArr, director);
         movies.push(movie);
 
     }
@@ -108,7 +112,8 @@ app.factory("movieSrv", function($log, $http, $q, convert) {
         let async = $q.defer();
 
         $http.get(movieDetailsUrl).then(function(res) {
-            let tmdbMovie = {"title": res.data.title,   
+            let tmdbMovie = {"id": res.data.id,
+                            "title": res.data.title,   
                             "imdbId": res.data.imdb_id,
                             "releaesDate": res.data.release_date,
                             "length": res.data.runtime,

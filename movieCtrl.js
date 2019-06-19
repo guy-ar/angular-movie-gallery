@@ -1,5 +1,6 @@
-app.controller("movieCtrl", function($scope, $http, movieSrv) {
-       
+app.controller("movieCtrl", function($scope, movieSrv, $location) {
+    
+    $scope.movies = [];
     movieSrv.getMovies().then(function(movies) {
         $scope.movies = movies;
     }, function(err) {
@@ -12,7 +13,7 @@ app.controller("movieCtrl", function($scope, $http, movieSrv) {
     // Initializing variables
     $scope.movieSearchText = "";
     $scope.searchResults = [];
-    $scope.favoriteMovies = [];
+    //$scope.favoriteMovies = [];
     
     $scope.updateSearchResults = function() {
         if ($scope.movieSearchText) {
@@ -35,7 +36,7 @@ app.controller("movieCtrl", function($scope, $http, movieSrv) {
                 //  need to get the following data: name, imdbId, releasedDate, length, poster, starsArr, director
                 // failed to get the start and director - need to see how top get the image
                 // res.data.title, res.data.imdb_id, res.data.release_date, res.data.runtime, "https://image.tmdb.org/t/p/w500" + res.data.poster_path, [], "");
-                tmdbMovie.title, tmdbMovie.imdbId, tmdbMovie.releaesDate, 
+                tmdbMovie.id, tmdbMovie.title, tmdbMovie.imdbId, tmdbMovie.releaesDate, 
                 tmdbMovie.length, tmdbMovie.poster, [], "");
         }, function(err) {
             $log.error(err);
@@ -44,5 +45,9 @@ app.controller("movieCtrl", function($scope, $http, movieSrv) {
         // Cleaning the search result 
         $scope.movieSearchText = "";
         $scope.searchResults = [];
+    }
+
+    $scope.getMovieDtls = function(movie) {
+        $location.path("/movie/" + movie.id);
     }
 });

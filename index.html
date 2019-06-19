@@ -11,86 +11,40 @@
     <link rel="stylesheet" href="https://code.angularjs.org/1.7.8/angular-csp.css">
     <link rel="stylesheet" href="style.css">
     <script src="https://code.angularjs.org/1.7.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular-route.js"></script>
     <script src="app.js"></script>
     <script src="actorCtrl.js"></script>
     <script src="actorSrv.js"></script>
+    <script src="movieDtlsDir.js"></script>
     <script src="movieCtrl.js"></script>
     <script src="movieSrv.js"></script>
     <script src="movieDir.js"></script>
+    
     <script src="convertSrv.js"></script>
+    <script src="convertSrv.js"></script>
+    <script src="navBarCtrl.js"></script>
+    <script src="movieDtlsCtrl.js"></script>
   </head>
 
 
   <body >
     
-    <div class="container bg-light" ng-controller="actorCtrl">
-        <h1>My Actors!</h1>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" ng-controller="navBarCtrl">
+        <a class="navbar-brand" href="#">My Cinema</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="#!/actors">Actors</a>
+            <a class="nav-item nav-link" href="#!/movies">Movies</a>
+          </div>
+        </div>
+        {{"current Url:" + currentUrl}}
+      </nav>
     
-        <div class="container my-5">
-            <form>
-                <div class="form-group">
-                    <label for="fNameFilter">Actor Name</label>
-                    <input type="text" class="form-control" id="fNameFilter" ng-model="query" aria-describedby="fNameFilter" placeholder="start typing First Name or Last Name">
-                    <small id="fNameFilter" class="form-text text-muted">filter can be based on Actor First name or Actor Last Name.</small>
-                </div>
-                <p>Please select the Order By option:</p>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" ng-model="orderFld" value="fName">
-                    <label class="form-check-label" for="radio1">First Name</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" ng-model="orderFld" value="lName">
-                    <label class="form-check-label" for="radio2">Last Name</label>
-                </div>
-                <div class="form-check form-check-inline mb-3">
-                    <input class="form-check-input" type="radio" ng-model="orderFld" value="bDay">
-                    <label class="form-check-label" for="radio3">Birthday</label>
-                </div>
-            </form>
-        </div>
-        
-        <div class="row">
-            <h4 class="text-danger" ng-show="filteredActors.length == 0">No items found for the filter</h4>
-             <div class="col-md-4 col-sm-6 mb-5" ng-repeat="actor in filteredActors = (actors | filter:filterQuery | orderBy: orderFld) "> 
-          <!--          <div class="col-md-4 col-sm-6 mb-5" ng-repeat="actor in actors | filter:filterQuery | orderBy: orderFld "> -->
-                <!-- this solution has bug - when filter - the selected hold different data that match tothe old selected -->
-                <!-- <div ng-class="{'card': true, 'bg-danger': $index === selectedCard}" ng-click="selected($index);"> -->
-                <div ng-class="{'card': true, 'bg-danger':actor === selectedActor}" ng-click="selected(actor);">
-                    <img class="card-img-top" ng-src=" {{ actor.image }} "  alt="Card image">
-                    <div class="card-body">
-                    <a href=" {{ actor.imdb}}" target="_blank" >
-                        <h4 class="card-title">{{ actor.fullName() }}</h4>
-                    </a>
-                    <p class="card-text">Birthday: {{ actor.bDay | date }} <br> 
-                        Age: {{ actor.getAge() }}
-                    </p>
-                    
-                    
-                    </div>
-                </div>
-            </div>
-        </div>
-      
-      
-    </div>
-   
-    <div class="container bg-light" ng-controller="movieCtrl">
-        <h1>My Movies!</h1>
-        <div class="search-box my-3">
-            <input class="form-control search-input" type="text" placeholder="Enter Movie Name to Add" 
-            ng-model="movieSearchText" ng-change="updateSearchResults()">
-        </div>
-        <div class="search-results" ng-show="searchResults.length > 0">
-            <ul class="list-group">
-                <a href="#" ng-repeat="result in searchResults" 
-                class="list-group-item list-group-item-action" ng-click="addMovie(result)">{{result.title}}</a>
-            </ul>
-        </div>
-
-        <!-- Switch to use myMovie directive -->
-        <my-movie></my-movie>
-    
-    </div>
+    <ng-view></ng-view>
 
     
   </body>
